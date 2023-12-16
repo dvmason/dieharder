@@ -3,13 +3,13 @@
 # Make changes to the version number(s) in particular ONLY here.
 #==================================================================
 
-AC_PREREQ(2.59)
+AC_PREREQ([2.71])
 
 #==================================================================
 # Be sure to set DIEHARDER_LT_VERSION below at the same time
 # you change this:
 #==================================================================
-AC_INIT([dieharder], [3.31.1])
+AC_INIT([dieharder],[3.31.1])
 
 AM_INIT_AUTOMAKE([-Wall])
 AC_CONFIG_SRCDIR([dieharder.abs])
@@ -69,7 +69,7 @@ AC_PROG_MAKE_SET
 define([AC_LIBTOOL_LANG_CXX_CONFIG], [:])
 define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
 define([AC_LIBTOOL_LANG_GCJ_CONFIG], [:])
-AC_PROG_LIBTOOL
+LT_INIT
 
 #==================================================================
 # Check compiler features
@@ -139,7 +139,20 @@ AC_C_ENDIAN
 #==================================================================
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_HEADER_TIME
+m4_warn([obsolete],
+[Update your code to rely only on HAVE_SYS_TIME_H,
+then remove this warning and the obsolete code below it.
+All current systems provide time.h; it need not be checked for.
+Not all systems provide sys/time.h, but those that do, all allow
+you to include it and time.h simultaneously.])dnl
+AC_CHECK_HEADERS_ONCE([sys/time.h])
+# Obsolete code to be removed.
+if test $ac_cv_header_sys_time_h = yes; then
+  AC_DEFINE([TIME_WITH_SYS_TIME],[1],[Define to 1 if you can safely include both <sys/time.h>
+	     and <time.h>.  This macro is obsolete.])
+fi
+# End of obsolete code.
+
 
 #==================================================================
 # Files that configure needs to process with this so that they are

@@ -169,9 +169,16 @@ void dieharder_rng_types()
  }
 
  /*
+  * These are user defined generators.
+  */
+ i = 600;
+ dh_num_user_rngs = 0;
+ ADD(gsl_rng_iphi);
+ 
+ /*
   * Tally up all the generators we found.
   */
  dh_num_rngs = dh_num_gsl_rngs + dh_num_dieharder_rngs + dh_num_R_rngs +
-			dh_num_hardware_rngs;
+			dh_num_hardware_rngs + dh_num_user_rngs;
 
 }
